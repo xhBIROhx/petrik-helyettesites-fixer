@@ -26,10 +26,23 @@ logo.src = "icon.png"
 logo_href.appendChild(logo)
 header.appendChild(logo_href)
 
-day = document.createElement("div")
+/* day = document.createElement("div")
 day.classList.add('datum')
 day.appendChild(document.createTextNode(date))
-header.appendChild(day)
+header.appendChild(day) */
+
+dropdown = document.createElement("select")
+value = document.createElement("option")
+value.setAttribute('value', '1');
+value.innerText = "2023.09.05 - Kedd"
+dropdown.appendChild(value)
+
+
+value2 = document.createElement("option")
+value2.setAttribute('value', '2');
+value2.innerText = "test2ADASDADAS"
+dropdown.appendChild(value2)
+header.appendChild(dropdown)
 
 //search
 var searchBox = document.createElement('div');
@@ -177,6 +190,20 @@ function add_css(){
         font-size: 15px
     }
 
+    select {
+        font-family: OpenSans;
+        outline: none;
+        border: none;
+        background: transparent;
+        font-size: 32px;
+        color: white;
+        margin-left: 10%;
+    }
+
+    select option {
+        background-color: black;
+    }
+
     .entry {
         height:fit-content;
         margin:40px auto 40px auto;
@@ -251,17 +278,16 @@ function add_css(){
 }
 
 window.addEventListener('scroll', function() {
-  if (window.scrollY >= 64) {
-    document.querySelector('header a img').style.transition = 'filter 0.5s ease';
-    document.querySelector('header a img').style.filter = 'brightness(50%)';
-  } else {
-    document.querySelector('header a img').style.transition = 'filter 0.5s ease';
-    document.querySelector('header a img').style.filter = 'none';
-  }
+    if (window.scrollY >= 64) {
+        document.querySelector('header a img').style.transition = 'filter 0.5s ease';
+        document.querySelector('header a img').style.filter = 'brightness(50%)';
+    } else {
+        document.querySelector('header a img').style.transition = 'filter 0.5s ease';
+        document.querySelector('header a img').style.filter = 'none';
+    }
 });
 
 document.querySelector("input").addEventListener("input", search_update);
-
 function search_update(e) {
     const value = e.target.value.trim();
     //console.log(value)
@@ -319,6 +345,12 @@ function search_update(e) {
         }
     })
 }
+
+date_selection = document.querySelector("select")
+
+date_selection.addEventListener("click", () => {
+    console.log(date_selection.value) //dang
+})
 
 /* 
 ora subdata => óra
