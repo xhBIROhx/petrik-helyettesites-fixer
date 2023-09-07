@@ -3,7 +3,10 @@
 > A petrik jelenlegi helyettesítési naplója ellégé csúnya illetve nehezen olvasható.
 > Gondoltam megjavíthatnám egy kis szépítgetéssel, és ha már ittvagyok miért ne tegyek bele functionality-t
 
-Firefox-on nem működik, nem direkt hanem nem értem miért nem :p
+known bugs:
+
+ - Firefox-on nem működik, nem direkt hanem nem értem miért nem :p
+ - A table header-t is filetereli
 
 ***
 
