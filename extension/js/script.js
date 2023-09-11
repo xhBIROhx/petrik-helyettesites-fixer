@@ -51,6 +51,7 @@ function get_data(){
     const website = document.querySelectorAll(".content div")
     var date_index = -1;
     var teremcsere_index = false
+
     website.forEach(element => {
         if (element.className.includes("subdata") || element.className.includes("tanarcim") || element.className.includes("data")){
             return;
@@ -158,7 +159,7 @@ function add_css(){
         font-size: 15px
     }
 
-    select {
+    select, #title {
         font-family: OpenSans;
         outline: none;
         border: none;
@@ -166,6 +167,8 @@ function add_css(){
         font-size: 32px;
         color: white;
         margin-left: 10%;
+        margin-top: auto;
+        margin-bottom: auto;
     }
 
     select option {
@@ -337,6 +340,26 @@ function setup_listener_for_dropdown() {
 function fill_main_space(){
     //clear main space
     clear_main()
+
+    //check if the website is empty or not (usually at the weekends)
+    if (!website_json[dropdown.value]){
+            new_div = document.createElement("div");
+            new_div.classList.add('information');
+            new_div.classList.add('entry');
+            new_div.appendChild(document.createTextNode("Nincs információ a következő napokról"));
+            main.appendChild(new_div);
+
+            //remove search and date
+            document.querySelector("#search").style.display = "none"
+            dropdown.style.display = "none"
+
+            //add some text maybe?
+            new_div = document.createElement("div")
+            new_div.innerText = "Petrik Lajos Két Tanítási Nyelvű Technikum"
+            new_div.id = "title"
+            document.querySelector("header").appendChild(new_div)
+        return
+    }
 
     //add shit
     if (website_json[dropdown.value].information){
