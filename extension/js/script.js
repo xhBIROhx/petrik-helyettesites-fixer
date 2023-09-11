@@ -477,6 +477,10 @@ function filter_website(){
             table_rows.forEach((row) => {
                 var found_in_row = false;
                 //console.log(row)
+
+                //check if it's a TH, if yes, ignore
+                if (row.querySelector("th")){return}
+
                 contents = row.querySelectorAll("td")
                 contents.forEach((datapoint) => {
                     if(datapoint.textContent.toLowerCase().includes(value)){
@@ -485,6 +489,7 @@ function filter_website(){
                         //show
                     }
                 })
+
                 if (found_in_row){
                     found_in_entry = true
                     row.style.removeProperty("display")
