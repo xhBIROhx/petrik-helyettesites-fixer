@@ -6,6 +6,7 @@
 known bugs:
 
  - Firefox-on nem működik, nem direkt hanem nem értem miért nem :p
+   - update: amugy működik csak temp. addon-nak kell hozzáadni
 
 ***
 
