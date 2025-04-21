@@ -11,3 +11,4 @@ known bugs:
 ***
 
 * 2.0: Mostmár lehet napot változtatni illetve ki is íródnak a teremcserék
+* 2.1: Mostmár lehet firefox nightly-ban használni
