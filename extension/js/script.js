@@ -313,6 +313,11 @@ function add_header() {
     input.setAttribute('type', 'text');
     input.setAttribute('id', 'search-input');
     input.setAttribute('placeholder', 'Keresés..');
+    prev_search = localStorage.getItem("search") //fill prev query
+    console.log("loaded search: " + prev_search)
+    if (prev_search) {
+        input.value = prev_search
+    }
     search_div.appendChild(input);
 
     header.appendChild(search_div)
@@ -484,6 +489,7 @@ function fill_main_space(){
 
 function filter_website(){
     const value = document.querySelector("#search-input").value.trim().toLowerCase()
+    localStorage.setItem("search", value);
     //console.log("search: "+value)
     //search
     //console.log(value)
