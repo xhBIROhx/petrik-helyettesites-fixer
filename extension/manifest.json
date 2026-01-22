@@ -2,15 +2,9 @@
     "manifest_version": 3,
     "name": "Petrik helyetessítés fixer",
     "version": "2.1",
-    "authors": [
-        {
-            "name": "Bíró Richárd"
-        }
-    ],
-
     "content_scripts": [
         {
-            "matches": ["https://helyettesites.petrik.hu/"],
+            "matches": ["https://helyettesites.petrik.hu/*"],
             "js": ["js/script.js"]
         }
     ],

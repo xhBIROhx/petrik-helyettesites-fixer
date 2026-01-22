@@ -234,10 +234,36 @@ function add_css(){
             margin-right: 15%;
         }
     }
-    @media only screen and (max-width: 870px) {
+    @media only screen and (max-width: 920px) {
         .entry {
             margin-left: 0;
             margin-right: 0;
+        }
+    }
+    @media only screen and (max-width: 600px) {
+        .entry {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        #search input, #search input:focus, #search input:active {
+            font-size: 10px;
+            color: white;
+        }
+        select, #title, .datum {
+            font-size: 22px;
+        }
+        .information, .entry strong {
+            font-size: 19px;
+        }
+        table, th, td {
+            font-size: 14px;
+        }
+        header {
+            flex-direction: column;
+        }
+        #select, #search {
+            margin-left: 65px;
         }
     }
 
@@ -272,6 +298,7 @@ function add_header() {
 
     //date
     const dropdown = document.createElement("select")
+    dropdown.id = "select";
     header.appendChild(dropdown)
 
     //search
@@ -322,7 +349,7 @@ function setup_listener_for_scroll() {
 }
 
 function setup_listener_for_dropdown() {
-    dropdown.addEventListener("click", () => {
+    dropdown.addEventListener("change", () => {
         if (dropdown.value != previous_dropdown_value) {
             previous_dropdown_value = dropdown.value
 
