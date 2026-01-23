@@ -23,6 +23,12 @@
 const website_json = []
 const legends = ["Óra", "Tanár", "Terem", "Osztály", "Jegyzetek"]
 
+//global pointers basically
+const input = document.createElement('input');
+const feedback = document.createElement('div');
+const main = document.createElement("div");
+const dropdown = document.createElement("select")
+
 //get all the data
 get_data()
 console.log("Kell az egész helyettesítés egy json-ben?") //to-do SORT THE tachers[*].rows[*] with the .rows[0]'s order IF This is very easy to do make it doable by clicking the legend later
@@ -36,9 +42,7 @@ add_css()
 
 //add new website contents
 add_header()
-dropdown = document.querySelector("select")
 add_main()
-main = document.querySelector("#main");
 fill_dropdown()
 previous_dropdown_value = dropdown.value
 setup_listener_for_dropdown()
@@ -240,7 +244,7 @@ function add_css(){
             margin-right: 0;
         }
     }
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 630px) {
         .entry {
             margin-left: 0;
             margin-right: 0;
@@ -252,6 +256,7 @@ function add_css(){
         }
         select, #title, .datum {
             font-size: 22px;
+            margin-left: 65px;
         }
         .information, .entry strong {
             font-size: 19px;
@@ -275,9 +280,14 @@ function add_css(){
 }
 
 function add_main() {
-    main = document.createElement("div");
     main.id = 'main'
     document.body.appendChild(main)
+
+    feedback.classList.add('information');
+    //feedback.classList.add('entry');
+    feedback.id = "feedback"
+    feedback.appendChild(document.createTextNode("Nincs találat a keresésre"));
+    feedback.style.display = "none"
 }
 
 function add_header() {
@@ -297,7 +307,6 @@ function add_header() {
     header.appendChild(day) */
 
     //date
-    const dropdown = document.createElement("select")
     dropdown.id = "select";
     header.appendChild(dropdown)
 
@@ -309,7 +318,6 @@ function add_header() {
     label.textContent = 'Keresés: ';
     searchBox.appendChild(label); */
 
-    input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('id', 'search-input');
     input.setAttribute('placeholder', 'Keresés..');
@@ -323,6 +331,7 @@ function add_header() {
     header.appendChild(search_div)
 
     document.body.appendChild(header)
+    input.focus()
 }
 
 function fill_dropdown() {
@@ -337,7 +346,7 @@ function fill_dropdown() {
 }
 
 function setup_listener_for_search() {
-    document.querySelector("input").addEventListener("input", filter_website);
+    input.addEventListener("input", filter_website);
 }
 
 function setup_listener_for_scroll() {
@@ -359,10 +368,6 @@ function setup_listener_for_dropdown() {
             previous_dropdown_value = dropdown.value
 
             fill_main_space()
-            //filter website if the search is not empty
-            if (document.querySelector("#search-input").value.trim()) {
-                filter_website()
-            }
         }else {
             //console.log("it's the same so we won't requery")
         }
@@ -372,39 +377,38 @@ function setup_listener_for_dropdown() {
 function fill_main_space(){
     //clear main space
     clear_main()
+    main.appendChild(feedback)
 
     //check if the website is empty or not (usually at the weekends)
     if (!website_json[dropdown.value]){
-            new_div = document.createElement("div");
-            new_div.classList.add('information');
-            new_div.classList.add('entry');
-            new_div.appendChild(document.createTextNode("Nincs információ a következő napokról"));
-            main.appendChild(new_div);
+        new_div = document.createElement("div");
+        new_div.classList.add('information');
+        //new_div.classList.add('entry');
+        new_div.appendChild(document.createTextNode("Nincs információ a következő napokról"));
+        main.appendChild(new_div);
 
-            //remove search and date
-            document.querySelector("#search").style.display = "none"
-            dropdown.style.display = "none"
+        //remove search and date
+        document.querySelector("#search").style.display = "none"
+        dropdown.style.display = "none"
 
-            //add some text maybe?
-            new_div = document.createElement("div")
-            new_div.innerText = "Petrik Lajos Két Tanítási Nyelvű Technikum"
-            new_div.id = "title"
-            document.querySelector("header").appendChild(new_div)
+        //add some text maybe?
+        new_div = document.createElement("div")
+        new_div.innerText = "Petrik helyettesítés"
+        new_div.id = "title"
+        document.querySelector("header").appendChild(new_div)
         return
     }
-
-    //add shit
+    //add content
     if (website_json[dropdown.value].information){
         website_json[dropdown.value].information.forEach((text) => {
             //uhm print information
-            //console.log(text)
+            //console.log(text) 
 
             new_div = document.createElement("div");
             new_div.classList.add('information');
             new_div.classList.add('entry');
             new_div.appendChild(document.createTextNode(text));
             main.appendChild(new_div);
-
         })
     }
     if (website_json[dropdown.value].teachers) {
@@ -485,15 +489,16 @@ function fill_main_space(){
         new_div.appendChild(table_div)
         main.appendChild(new_div)
     }
+    
+    filter_website()
 }
 
 function filter_website(){
-    const value = document.querySelector("#search-input").value.trim().toLowerCase()
+    const value = input.value.trim().toLowerCase()
     localStorage.setItem("search", value);
     //console.log("search: "+value)
     //search
     //console.log(value)
-    it_was_empty = false
     if (!value){
         document.querySelectorAll(".entry").forEach((entry) => {
             entry.style.removeProperty("display")
@@ -501,16 +506,17 @@ function filter_website(){
         document.querySelectorAll("tr").forEach(row => {
             row.style.removeProperty("display")
         })
-        it_was_empty = true
+        return
     }
-    if (it_was_empty){return}
 
+    anything = false;
     document.querySelectorAll(".entry").forEach((entry) => {
         if(entry.classList.contains("information")) {
             //console.log(entry.textContent)
             if(entry.textContent.toLowerCase().includes(value)){
                 //show
                 entry.style.removeProperty("display")
+                anything = true;
             }else{
                 //hide
                 entry.style.display = "none";
@@ -522,6 +528,7 @@ function filter_website(){
             entry_title = entry.querySelector("strong")
             if(entry_title && entry_title.innerText.toLowerCase().includes(value)){
                 entry.style.removeProperty("display")
+                anything = true;
                 table_rows.forEach((row) => {
                     //show all subrows
                     row.style.removeProperty("display")
@@ -549,6 +556,7 @@ function filter_website(){
                 if (found_in_row){
                     found_in_entry = true
                     row.style.removeProperty("display")
+                    anything = true;
                 }else {
                     row.style.display = "none";
                 }
@@ -557,12 +565,18 @@ function filter_website(){
 
             if (found_in_entry){
                 entry.style.removeProperty("display")
+                anything = true;
             }else {
                 entry.style.display = "none";
             }
         }
     })
 
+    if (!anything) {
+        feedback.style.removeProperty("display")
+    }else {
+        feedback.style.display = "none"
+    }
 }
 
 function clear_main() {
