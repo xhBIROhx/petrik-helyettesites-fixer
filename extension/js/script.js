@@ -489,7 +489,7 @@ function fill_main_space(){
         new_div.appendChild(table_div)
         main.appendChild(new_div)
     }
-    
+
     filter_website()
 }
 
@@ -506,6 +506,7 @@ function filter_website(){
         document.querySelectorAll("tr").forEach(row => {
             row.style.removeProperty("display")
         })
+        feedback.style.display = "none"
         return
     }
 
@@ -572,10 +573,10 @@ function filter_website(){
         }
     })
 
-    if (!anything) {
-        feedback.style.removeProperty("display")
-    }else {
+    if (anything) {
         feedback.style.display = "none"
+    }else {
+        feedback.style.removeProperty("display")
     }
 }
 
