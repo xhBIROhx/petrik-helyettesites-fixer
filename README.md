@@ -8,3 +8,4 @@
 * 2.0: Mostmár lehet napot változtatni illetve ki is íródnak a teremcserék
 * 2.1: Mostmár lehet firefox nightly-ban használni
 * 2.2: Persistent search és jobb feedback
+* 2.3: A buildet lehet már véglegesen firefoxban használni
